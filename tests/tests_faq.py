@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 class TestFaq:
 
     @pytest.mark.parametrize("index", QUESTIONS.keys())
-    def test_faq_1(self, driver: WebDriver, index):
+    def test_faq_opens_correct_answer(self, driver: WebDriver, index):
         # распаковка кортежа в словаре QUESTIONS
         question, expected_answer = QUESTIONS[index]
 
