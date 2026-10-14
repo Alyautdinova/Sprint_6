@@ -3,6 +3,7 @@ from pages.home_page import HomePage
 from pages.header_page import HeaderPage
 from pages.order_page import OrderPage
 from pages.modal_page import ModalPage
+from pages.base_page import BasePage
 from data.urls import Urls
 from data.data_test import ORDER_DATA_1, ORDER_DATA_2
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -64,13 +65,14 @@ class TestOrder:
         # создание объекта страницы HeaderPage
         headerPage = HeaderPage(driver)
 
+        # нажатие на логотип "Скутер"
         headerPage.click_scooter_logo()
 
         # проверка, что находимся на главном урле
         assert driver.current_url == Urls.BASE_URL
 
     # тест на нажатие на логотип Яндекса на странице заказа самоката
-    def test_click_logo_scooter(self, driver: WebDriver):
+    def test_click_logo_yandex(self, driver: WebDriver):
 
         # открытие страницы
         driver.get(Urls.ORDER_URL)
@@ -78,8 +80,15 @@ class TestOrder:
         # создание объекта страницы HeaderPage
         headerPage = HeaderPage(driver)
 
+        # нажатие на логотип "Яндекс"
         headerPage.click_yandex_logo()
 
+        # создание объекта страницы BasePage
+        basePage = BasePage(driver)
+
+        # открытие новой вкладки в браузере
+        basePage.open_new_window("ya.ru")
+
         # проверяем URL новой вкладки
-        assert "dzen.ru" in driver.current_url
+        assert "ya.ru" in driver.current_url
         
