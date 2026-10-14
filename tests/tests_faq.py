@@ -6,19 +6,20 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 
 class TestFaq:
 
+    # тест по открытию ответов на вопросы
     @pytest.mark.parametrize("index", QUESTIONS.keys())
     def test_faq_opens_correct_answer(self, driver: WebDriver, index):
         # распаковка кортежа в словаре QUESTIONS
         question, expected_answer = QUESTIONS[index]
 
-        #открытие страницы
+        # открытие страницы
         driver.get(Urls.BASE_URL)
 
         # создание объекта страницы HomePage
         homePage = HomePage(driver)
 
         # нажатие во вопросу
-        homePage.wait_and_click_for_questions(index)
+        homePage.click_for_questions(index)
 
         # сравнение ожидаемого ответа с полученным
         actual_answer = homePage.get_answer_text(index)
