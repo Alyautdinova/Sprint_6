@@ -1,47 +1,34 @@
-from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from locators.order_locators import OrderLocators
 
 class OrderPage(BasePage):
-    first_name_input = [By.XPATH, "//input[@placeholder='* Имя']"]
-    last_name_input = [By.XPATH, "//input[@placeholder='* Фамилия']"]
-    address_input = [By.XPATH, "//input[@placeholder='* Адрес: куда привезти заказ']"]
-    metro_station_input = [By.XPATH, "//input[@placeholder='* Станция метро']"]
-    phone_input= [By.XPATH, "//input[@placeholder='* Телефон: на него позвонит курьер']"]
-    next_button = [By.XPATH, "//div[contains(@class, 'Order_NextButton')]/button[text()='Далее']"]
-    bring_date_input = [By.XPATH, "//input[@placeholder='* Когда привезти самокат']"]
-    rental_period_dropdown = [By.XPATH, "//div[contains(@class,'Dropdown')][text()='* Срок аренды']"]
-    comment_for_courier_input = [By.XPATH, "//input[@placeholder='Комментарий для курьера']"]
-    order_button = [By.XPATH, "//div[contains(@class,'Order_Buttons')]//button[text()='Заказать']"]
-    body_name = [By.TAG_NAME, "body"]
-
+    
     # метод заполнения поля "Имя"
     def set_first_name(self, first_name):
-        self.send_keys(self.first_name_input, first_name)
+        self.send_keys(OrderLocators.first_name_input, first_name)
 
     # метод заполнения поля "Фамилия"
     def set_last_name(self, last_name):
-        self.send_keys(self.last_name_input, last_name)
+        self.send_keys(OrderLocators.last_name_input, last_name)
 
     # метод заполнения поля "Адрес"
     def set_address(self, address):
-        self.send_keys(self.address_input, address)
+        self.send_keys(OrderLocators.address_input, address)
 
     # метод заполнения поля "Станция метро"
     def set_metro_station(self, metro_station):
-        self.click(self.metro_station_input)
-        station_option = (By.XPATH,
-                            f"//div[contains(@class,'select-search__select')]"
-                            f"//div[contains(@class,'Order_Text__2broi') and text()='{metro_station}']")
-        self.scroll_to(station_option)
-        self.click(station_option)
+        self.click(OrderLocators.metro_station_input)
+        metro_option = OrderLocators.metro_option(metro_station)
+        self.scroll_to(metro_option)
+        self.click(metro_option)
 
     # метод заполнения поля "Телефон"
     def set_phone(self, phone):
-        self.send_keys(self.phone_input, phone)
+        self.send_keys(OrderLocators.phone_input, phone)
 
     # метод нажатия на кнопку "Далее"
     def click_next_button(self):
-        self.click(self.next_button)
+        self.click(OrderLocators.next_button)
 
     # метод для заказа, заполнение полей "Для кого самокат"
     def order_about_client(self, data):
@@ -54,30 +41,28 @@ class OrderPage(BasePage):
 
     # метод заполнения поля "Когда привезти самокат"
     def set_bring_date(self, date):
-        self.send_keys(self.bring_date_input, date)
+        self.send_keys(OrderLocators.bring_date_input, date)
         # закрываем календарь по клику на нейтральному месту
-        self.click(self.body_name)
+        self.click(OrderLocators.body_name)
 
     # метод заполнения поля "Срок аренды"
     def set_rental_period(self, rental_period):
-        self.click(self.rental_period_dropdown)
-        rental_period_option = (By.XPATH,
-                            f"//div[contains(@class,'Dropdown-menu')]"
-                            f"//div[contains(@class,'Dropdown-option') and text()='{rental_period}']")
-        self.click(rental_period_option)
+        self.click(OrderLocators.rental_period_dropdown)
+        rental_option = OrderLocators.rental_option(rental_period)
+        self.click(rental_option)
 
     # метод для выбора цвета самоката (чёрный жемчуг или серая безысходность)
     def set_color_of_scooter(self, color_name):
-        color_of_scooter_checkbox = (By.XPATH, f"//div[contains(@class,'Order_Checkboxes')]//label[text()='{color_name}']")
+        color_of_scooter_checkbox = OrderLocators.color_option(color_name)
         self.click(color_of_scooter_checkbox)
 
     # метод заполнения поля "Комментарий для курьера"
     def set_comment_for_courier(self, comment):
-        self.send_keys(self.comment_for_courier_input, comment)
+        self.send_keys(OrderLocators.comment_for_courier_input, comment)
 
     # метод нажатия на кнопку "Заказать"
     def click_order_button(self):
-        self.click(self.order_button)
+        self.click(OrderLocators.order_button)
 
     # метод для заказа, заполнение полей "Про аренду"
     def order_about_rental(self, data):
