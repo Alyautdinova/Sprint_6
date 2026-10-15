@@ -16,10 +16,10 @@ class TestFaq:
         question, expected_answer = QUESTIONS[index]
 
         with allure.step('Открытие главной страницы'):
-            driver.get(Urls.BASE_URL)
+            homePage = HomePage(driver)
+            homePage.open(Urls.BASE_URL)
 
         with allure.step(f'Нажатие по вопросу №{index}: "{question}"'):
-            homePage = HomePage(driver)
             homePage.click_for_questions(index)
 
         with allure.step('Проверка текст ответа'):

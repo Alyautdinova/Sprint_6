@@ -4,11 +4,11 @@ from pages.home_page import HomePage
 from pages.header_page import HeaderPage
 from pages.order_page import OrderPage
 from pages.modal_page import ModalPage
-from pages.base_page import BasePage
 from data.urls import Urls
 from data.data_test import ORDER_DATA_1, ORDER_DATA_2
 from selenium.webdriver.chrome.webdriver import WebDriver
 
+@allure.title('Список тестов по созданию заказов на самокаты')
 class TestOrder:
 
     # параметризированный тест с нажатием на кнопку "Заказать" в хедере
@@ -18,14 +18,14 @@ class TestOrder:
     def test_scooter_order(self, driver: WebDriver, order_data):
         
         with allure.step('Открытие главной страницы'):
-            driver.get(Urls.BASE_URL)
+            headerPage = HeaderPage(driver)
+            headerPage.open(Urls.BASE_URL)
 
         with allure.step('Нажатие на кнопку "Заказать" в хедере'):
-            headerPage = HeaderPage(driver)
             headerPage.click_order_button()
 
         with allure.step('Проверка, что находимся на урле заказа самоката'):
-            assert driver.current_url == Urls.ORDER_URL
+            assert headerPage.get_current_url() == Urls.ORDER_URL
 
         with allure.step('Заполнение формы заказа самоката'):
             orderPage = OrderPage(driver)
@@ -46,21 +46,21 @@ class TestOrder:
     def test_click_logo_scooter(self, driver: WebDriver):
 
         with allure.step('Открытие главной страницы'):
-            driver.get(Urls.BASE_URL)
+            homePage = HomePage(driver)
+            homePage.open(Urls.BASE_URL)
 
         with allure.step('Нажатие на кнопку "Заказать" на главной странице'):
-            homePage = HomePage(driver)
             homePage.click_order_button()
 
         with allure.step('Проверка, что находимся на урле заказа самоката'):
-            assert driver.current_url == Urls.ORDER_URL
+            assert homePage.get_current_url() == Urls.ORDER_URL
 
         with allure.step('Нажатие на логотип "Скутер" в хедере на странице заказа самоката'):
             headerPage = HeaderPage(driver)
             headerPage.click_scooter_logo()
 
         with allure.step('Проверка редиректа на главную страницу'):
-            assert driver.current_url == Urls.BASE_URL
+            assert headerPage.get_current_url() == Urls.BASE_URL
 
     # тест на нажатие на логотип Яндекса на странице заказа самоката
     @allure.title('Логотип Яндекса открывает новую вкладку в браузере')
@@ -68,14 +68,13 @@ class TestOrder:
     def test_click_logo_yandex(self, driver: WebDriver):
 
         with allure.step('Открытие страницы заказа самоката'):
-            driver.get(Urls.ORDER_URL)
+            headerPage = HeaderPage(driver)
+            headerPage.open(Urls.ORDER_URL)
 
         with allure.step('Нажатие на логотип "Яндекс" в хедере на странице заказа самоката'):
-            headerPage = HeaderPage(driver)
             headerPage.click_yandex_logo()
 
         with allure.step('Проверка открытия новой вкладки браузера'):
-            basePage = BasePage(driver)
-            basePage.open_new_window("ya.ru")
-            assert "ya.ru" in driver.current_url
+            headerPage.open_new_window("ya.ru")
+            assert "ya.ru" in headerPage.get_current_url()
         

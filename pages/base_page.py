@@ -44,3 +44,11 @@ class BasePage:
     # метод получения текстового значения
     def get_text(self, locator):
         return self.wait.until(expected_conditions.visibility_of_element_located(locator)).text
+
+    # метод открытия страницы
+    def open(self, url):
+        self.driver.get(url)
+
+    # метод получения текущего урла
+    def get_current_url(self):
+        return self.driver.current_url
