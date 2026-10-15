@@ -30,17 +30,24 @@
 ## Структура проекта
 
 Sprint_6/
+├── data/                  # тестовые данные и URL
+│   ├── data_test.py       # наборы данных (FAQ, заказы)
+│   └── urls.py            # адреса страниц
+├── locators/              # селекторы элементов
+│   ├── header_locators.py
+│   ├── home_locators.py
+│   ├── order_locators.py
+│   └── modal_locators.py
 ├── pages/                 # Page Object Model
-│   ├── base_page.py       # базовый класс с общими методами
-│   ├── header_page.py     # хедер (логотипы, верхняя кнопка «Заказать»)
-│   ├── home_page.py       # главная страница (FAQ, нижняя кнопка «Заказать»)
-│   ├── order_page.py      # страница заказа
-│   └── modal_page.py      # модальное окно «Заказ оформлен»
+│   ├── base_page.py       # обёртки над Selenium
+│   ├── header_page.py     # хедер: логотипы, верхняя кнопка «Заказать»
+│   ├── home_page.py       # главная: FAQ, нижняя кнопка «Заказать»
+│   ├── order_page.py      # форма заказа
+│   └── modal_page.py      # модалка «Заказ оформлен»
 ├── tests/                 # тесты
-│   ├── tests_faq.py       # тесты FAQ
-│   └── tests_order.py     # тесты заказа и логотипов
+│   ├── tests_faq.py
+│   └── tests_order.py
 ├── conftest.py            # фикстуры (driver)
-├── data.py                # тестовые данные и URL
 ├── requirements.txt
 └── README.md
 
